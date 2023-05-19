@@ -23,14 +23,12 @@ const Item = styled(Paper)(({ theme }) => ({
 	overflow: "scroll",
 	color: theme.palette.text.secondary,
 }));
-
+const contractAddress = "0xCBA5d12fB5EA43A58677192DE2e2ec616cf8c686";
 export default function RecordBoard() {
 	const [open, setOpen] = useState(false);
 	const [input, setInput] = useState("");
 	const { supplier } = useSupplier();
-	const { records, uploadRecord } = useRecords(
-		"0xCBA5d12fB5EA43A58677192DE2e2ec616cf8c686"
-	);
+	const { records, uploadRecord } = useRecords(contractAddress);
 
 	return (
 		<Container>

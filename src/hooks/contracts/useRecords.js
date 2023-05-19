@@ -11,11 +11,19 @@ const useRecords = (address) => {
 	});
 
 	const readRecords = async () => {
-		const contract = providerContract(address, SupplyChain.abi);
+		const contract = signerContract(address, SupplyChain.abi);
 		try {
-			const { data } = JSON.parse(await contract.getRecords());
-			console.log(data);
-			setRecords(data);
+			// const recordCount = await contract.getRecordCount();
+			// const records = [];
+			// for (let i = 0; i < recordCount; i += 1) {
+			// 	const record = await contract.getRecord(recordCount);
+			// 	records.push(record);
+			// 	console.log(records);
+			// }
+			setRecords([
+				{ date: "2023-05", message: "sent to china" },
+				{ date: "2023-05", message: "sent to china" },
+			]);
 		} catch (err) {
 			alert(
 				"Switch your MetaMask network to Polygon zkEVM testnet and refresh this page!"
