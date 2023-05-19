@@ -1,6 +1,10 @@
-import Counter from "./app/Counter";
+import RecordBoard from "./app/RecordBoard";
 function App() {
-	return <Counter />;
+	return (
+		<>
+			<RecordBoard />;
+		</>
+	);
 }
 
 export default App;
