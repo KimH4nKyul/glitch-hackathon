@@ -6,7 +6,7 @@
 			"id": "@id",
 			"type": "@type",
 			"proofOfRolexOwner": {
-				"@id": "https://github.com/habibi03336/glitch-hackathon/blob/master/dev/proof-of-rolex-owner.jsonld#proofOfRolexOwner",
+				"@id": "https://raw.githubusercontent.com/habibi03336/glitch-hackathon/master/dev/proof-of-rolex-owner.jsonld#ProofOfRolexOwner",
 				"@context": {
 					"@version": 1.1,
 					"@protected": true,

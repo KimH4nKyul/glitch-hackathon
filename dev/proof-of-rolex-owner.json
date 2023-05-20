@@ -3,8 +3,8 @@
 	"type": "object",
 	"$metadata": {
 		"uris": {
-			"jsonLdContext": "https://github.com/habibi03336/glitch-hackathon/blob/master/dev/proof-of-rolex-owner.jsonld",
-			"jsonSchema": "https://github.com/habibi03336/glitch-hackathon/blob/master/dev/proof-of-rolex-owner.json"
+			"jsonLdContext": "https://raw.githubusercontent.com/habibi03336/glitch-hackathon/master/dev/proof-of-rolex-owner.jsonld",
+			"jsonSchema": "https://raw.githubusercontent.com/habibi03336/glitch-hackathon/master/dev/proof-of-rolex-owner.json"
 		}
 	},
 	"required": [
