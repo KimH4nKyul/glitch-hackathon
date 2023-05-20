@@ -11,18 +11,18 @@ const useRecords = (address) => {
 	});
 
 	const readRecords = async () => {
-		const contract = signerContract(address, SupplyChain.abi);
+		const contract = providerContract(address, SupplyChain.abi);
 		try {
 			const recordCount = await contract.getRecordCount();
 			const records = [];
 			for (let i = 0; i < recordCount; i += 1) {
 				const record = await contract.getRecord(i);
+				console.log(record[2]);
 				records.push({
 					recordId: Number(BigInt(record[0])),
-					date: Number(BigInt(record[2])),
+					date: new Date(Number(BigInt(record[2])) * 1000).toString(),
 					message: record[1],
 				});
-				console.log(records[i]);
 			}
 			setRecords(records);
 		} catch (err) {
