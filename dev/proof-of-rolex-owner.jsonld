@@ -5,8 +5,8 @@
 			"@protected": true,
 			"id": "@id",
 			"type": "@type",
-			"proofOfRolexOwner": {
-				"@id": "https://raw.githubusercontent.com/habibi03336/glitch-hackathon/master/dev/proof-of-rolex-owners.jsonld#ProofOfRolexOwner",
+			"ProofOfRolexOwner": {
+				"@id": "https://raw.githubusercontent.com/habibi03336/glitch-hackathon/master/dev/proof-of-rolex-owner.jsonld#ProofOfRolexOwner",
 				"@context": {
 					"@version": 1.1,
 					"@protected": true,
