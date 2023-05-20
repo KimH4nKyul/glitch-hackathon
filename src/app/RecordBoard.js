@@ -1,111 +1,83 @@
-//design
-import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-//state
 import { useState } from "react";
 import useSupplier from "../hooks/contracts/useSupplier";
 import useRecords from "../hooks/contracts/useRecords";
 import QRCode from "react-qr-code";
 
-const Item = styled(Paper)(({ theme }) => ({
-	backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-	...theme.typography.body2,
-	padding: theme.spacing(2),
-	textAlign: "start",
-	height: "50px",
-	overflow: "scroll",
-	color: theme.palette.text.secondary,
-}));
 const contractAddress = "0x720B5bCE9DaA428Fb8E4Cd311b9a3d7a14e5094d";
+
 export default function RecordBoard() {
-	const [open, setOpen] = useState(false);
-	const [input, setInput] = useState("");
-	const { supplier } = useSupplier();
-	const { records, uploadRecord } = useRecords(contractAddress);
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const { supplier } = useSupplier();
+  const { records, uploadRecord } = useRecords(contractAddress);
+  const handleQRButtonClick = () => {
+    setOpen(true);
+  };
 
-	return (
-		<Container>
-			<h1>{supplier}</h1>
-			<div style={{ display: "flex" }}>
-				<TextField
-					onChange={(e) => setInput(e.target.value)}
-					value={input}
-					sx={{ width: "85%" }}
-					id="outlined-basic"
-					label="Message"
-					variant="outlined"
-				/>
-				<Button
-					onClick={async () => {
-						await uploadRecord(input);
-						setInput("");
-					}}
-					sx={{ margin: "0 5px", width: "15%" }}
-					variant="outlined"
-				>
-					push
-				</Button>
-			</div>
+  return (
+    <div className="container mx-auto">
+      <h1 className="text-4xl font-bold mb-4">{supplier}</h1>
+      <div className="flex">
+        <input
+          onChange={(e) => setInput(e.target.value)}
+          value={input}
+          className="border border-gray-300 rounded-md px-3 py-2 w-5/6"
+          id="outlined-basic"
+          placeholder="Message"
+        />
+        <button
+          onClick={async () => {
+            await uploadRecord(input);
+            setInput("");
+          }}
+          className="border border-gray-300 rounded-md px-3 py-2 ml-2 w-1/6"
+        >
+          Add
+        </button>
+      </div>
 
-			<Box
-				sx={{
-					flexGrow: 1,
-					marginTop: "1rem",
-				}}
-			>
-				<Grid container spacing={3}>
-					{records.map((record) => (
-						<Grid key={record.recordId} item xs={6}>
-							<Item>
-								{record.date} <br />
-								{record.message}
-							</Item>
-						</Grid>
-					))}
-				</Grid>
-			</Box>
-			<Button
-				onClick={() => setOpen(true)}
-				sx={{
-					position: "fixed",
-					bottom: 0,
-					right: 0,
-					width: "120px",
-					height: "120px",
-					margin: "10px",
-				}}
-				variant="outlined"
-			>
-				QR
-			</Button>
-			<Modal
-				open={open}
-				onClose={() => setOpen(false)}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			>
-				<Box sx={modalBoxStyle}>
-					<QRCode value="www.naver.com" />
-				</Box>
-			</Modal>
-		</Container>
-	);
+      <div className="grid grid-cols-2 gap-4 mt-4 justify-center">
+        {records.map((record, index) => (
+          <div
+            key={record.recordId}
+            className="w-1/2 flex justify-center items-center"
+          >
+            <div className="card w-96 bg-base-100 shadow-xl">
+              <figure>
+                <img
+                  src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                  alt="Shoes"
+                />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title">{record.message}</h2>
+                <p>{record.date}</p>
+                <div className="card-actions justify-end">
+                  <button
+                    onClick={handleQRButtonClick}
+                    className="btn btn-primary"
+                  >
+                    QR
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {open && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-md">
+            <QRCode value="www.naver.com" />
+            <button
+              onClick={() => setOpen(false)}
+              className="btn btn-primary mt-4"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
-
-const modalBoxStyle = {
-	position: "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	bgcolor: "background.paper",
-	border: "2px solid #000",
-	boxShadow: 24,
-	p: 4,
-};

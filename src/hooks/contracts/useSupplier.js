@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const useSupplier = () => {
 	const [supplier, setSuppliers] = useState(
-		"Paris Baguette: Potato Bread Supply chain"
+		"Damir's items"
 	);
 	return { supplier };
 };
