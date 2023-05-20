@@ -23,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 	overflow: "scroll",
 	color: theme.palette.text.secondary,
 }));
-const contractAddress = "0xCBA5d12fB5EA43A58677192DE2e2ec616cf8c686";
+const contractAddress = "0x720B5bCE9DaA428Fb8E4Cd311b9a3d7a14e5094d";
 export default function RecordBoard() {
 	const [open, setOpen] = useState(false);
 	const [input, setInput] = useState("");
@@ -35,16 +35,16 @@ export default function RecordBoard() {
 			<h1>{supplier}</h1>
 			<div style={{ display: "flex" }}>
 				<TextField
+					onChange={(e) => setInput(e.target.value)}
+					value={input}
 					sx={{ width: "85%" }}
 					id="outlined-basic"
 					label="Message"
 					variant="outlined"
 				/>
 				<Button
-					onChange={(e) => setInput(e.target.value)}
-					value={input}
-					onClick={async (e) => {
-						await uploadRecord(e.target.value);
+					onClick={async () => {
+						await uploadRecord(input);
 						setInput("");
 					}}
 					sx={{ margin: "0 5px", width: "15%" }}
@@ -62,7 +62,7 @@ export default function RecordBoard() {
 			>
 				<Grid container spacing={3}>
 					{records.map((record) => (
-						<Grid item xs={6}>
+						<Grid key={record.recordId} item xs={6}>
 							<Item>
 								{record.date} <br />
 								{record.message}

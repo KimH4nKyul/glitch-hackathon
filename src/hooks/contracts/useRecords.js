@@ -13,17 +13,18 @@ const useRecords = (address) => {
 	const readRecords = async () => {
 		const contract = signerContract(address, SupplyChain.abi);
 		try {
-			// const recordCount = await contract.getRecordCount();
-			// const records = [];
-			// for (let i = 0; i < recordCount; i += 1) {
-			// 	const record = await contract.getRecord(recordCount);
-			// 	records.push(record);
-			// 	console.log(records);
-			// }
-			setRecords([
-				{ date: "2023-05", message: "sent to china" },
-				{ date: "2023-05", message: "sent to china" },
-			]);
+			const recordCount = await contract.getRecordCount();
+			const records = [];
+			for (let i = 0; i < recordCount; i += 1) {
+				const record = await contract.getRecord(i);
+				records.push({
+					recordId: Number(BigInt(record[0])),
+					date: Number(BigInt(record[2])),
+					message: record[1],
+				});
+				console.log(records[i]);
+			}
+			setRecords(records);
 		} catch (err) {
 			alert(
 				"Switch your MetaMask network to Polygon zkEVM testnet and refresh this page!"
