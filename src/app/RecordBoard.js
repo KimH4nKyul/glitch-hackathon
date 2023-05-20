@@ -1,83 +1,131 @@
 import { useState } from "react";
-import useSupplier from "../hooks/contracts/useSupplier";
 import useRecords from "../hooks/contracts/useRecords";
 import QRCode from "react-qr-code";
+import DayjustSilver from "../asset/dayjust-silver.png";
+import SubmarinerGreen from "../asset/submariner-green.png";
 
-const contractAddress = "0x720B5bCE9DaA428Fb8E4Cd311b9a3d7a14e5094d";
+const contractAddress = "0xFb0c1515F8738da5C1D543f6AE354d573Ab1079A";
 
 export default function RecordBoard() {
-  const [open, setOpen] = useState(false);
-  const [input, setInput] = useState("");
-  const { supplier } = useSupplier();
-  const { records, uploadRecord } = useRecords(contractAddress);
-  const handleQRButtonClick = () => {
-    setOpen(true);
-  };
+	const [open, setOpen] = useState(false);
+	const [colorInput, setColorInput] = useState("");
+	const [madeDateInput, setMadeDateInput] = useState("");
+	const [modelInput, setModelInput] = useState("");
+	const [isVerified, setIsVerified] = useState(false);
+	// const { supplier } = useSupplier();
+	const { records, uploadRecord } = useRecords(contractAddress);
+	const handleQRButtonClick = () => {
+		setOpen(true);
+	};
 
-  return (
-    <div className="container mx-auto">
-      <h1 className="text-4xl font-bold mb-4">{supplier}</h1>
-      <div className="flex">
-        <input
-          onChange={(e) => setInput(e.target.value)}
-          value={input}
-          className="border border-gray-300 rounded-md px-3 py-2 w-5/6"
-          id="outlined-basic"
-          placeholder="Message"
-        />
-        <button
-          onClick={async () => {
-            await uploadRecord(input);
-            setInput("");
-          }}
-          className="border border-gray-300 rounded-md px-3 py-2 ml-2 w-1/6"
-        >
-          Add
-        </button>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 mt-4 justify-center">
-        {records.map((record, index) => (
-          <div
-            key={record.recordId}
-            className="w-1/2 flex justify-center items-center"
-          >
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <figure>
-                <img
-                  src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{record.message}</h2>
-                <p>{record.date}</p>
-                <div className="card-actions justify-end">
-                  <button
-                    onClick={handleQRButtonClick}
-                    className="btn btn-primary"
-                  >
-                    QR
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {open && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-md">
-            <QRCode value="www.naver.com" />
-            <button
-              onClick={() => setOpen(false)}
-              className="btn btn-primary mt-4"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+	return (
+		<div className="container mx-auto">
+			<h1 className="text-4xl font-bold m-4">Verified Rollies</h1>
+			<div className="flex m-3">
+				<button
+					onClick={handleQRButtonClick}
+					className="border border-gray-300 rounded-md px-3 py-2 ml-2 w-full"
+				>
+					Register
+				</button>
+			</div>
+			<div className="m-3 grid grid-cols-2 mt-4 justify-center">
+				{records.map((record, index) => (
+					<div
+						key={record.recordId}
+						className="flex flex justify-center items-center m-3"
+					>
+						<div className="card h-96 w-96 bg-base-100 shadow-xl">
+							<figure className="h-48">
+								<img
+									src={
+										record.info.model === "dayjust"
+											? DayjustSilver
+											: SubmarinerGreen
+									}
+								/>
+							</figure>
+							<div className="p-3 h-52">
+								<p>model: {record.info.model}</p>
+								<p>color: {record.info.color}</p>
+								<p>made date: {record.info.madeAt}</p>
+								<p>registered date: {record.date}</p>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+			{open && (
+				<div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+					<div className="w-full m-3 bg-white p-2 rounded-md grid gap-3">
+						<select
+							onChange={(e) => setModelInput(e.target.value)}
+							value={modelInput}
+							className="border border-gray-300 rounded-md px-3 py-2 w-full"
+							id="outlined-basic"
+							placeholder="model"
+						>
+							<option value="submariner">submariner</option>
+							<option value="daytona">daytona</option>
+							<option value="galaxy">dayjust</option>
+						</select>
+						<select
+							onChange={(e) => setColorInput(e.target.value)}
+							value={colorInput}
+							className="border border-gray-300 rounded-md px-3 py-2 w-full"
+							id="outlined-basic"
+							placeholder="color"
+						>
+							<option value="silver">silver type</option>
+							<option value="green">green type</option>
+							<option value="red">red type</option>
+							<option value="blue">blue type</option>
+							<option value="black">black type</option>
+						</select>
+						<input
+							onChange={(e) => setMadeDateInput(e.target.value)}
+							type="date"
+							value={madeDateInput}
+							className="border border-gray-300 rounded-md px-3 py-2 w-full"
+							id="outlined-basic"
+							placeholder="Message"
+						/>
+						{!isVerified && (
+							<QRCode
+								style={{ margin: "auto" }}
+								onClick={() => setIsVerified(!isVerified)}
+								value={`{"id":"1a54fd97-691e-42c4-9b03-5d412f8823e4","typ":"application/iden3comm-plain-json","type":"https://iden3-communication.io/authorization/1.0/request","thid":"1a54fd97-691e-42c4-9b03-5d412f8823e4","body":{"callbackUrl":"https://self-hosted-demo-backend-platform.polygonid.me/api/callback?sessionId=70520","reason":"test flow","scope":[]},"from":"did:polygonid:polygon:mumbai:2qLhNLVmoQS7pQtpMeKHDqkTcENBZUj1nkZiRNPGgV"}`}
+							/>
+						)}
+						{isVerified && <div>"Verified!"</div>}
+						<button
+							onClick={() => {
+								if (!isVerified) setOpen(false);
+								if (isVerified) {
+									console.log(
+										JSON.stringify({
+											color: colorInput,
+											model: modelInput,
+											madeAt: madeDateInput,
+										})
+									);
+									uploadRecord(
+										JSON.stringify({
+											color: colorInput,
+											model: modelInput,
+											madeAt: madeDateInput,
+										})
+									);
+									setOpen(false);
+								}
+							}}
+							className="btn btn-primary mt-4"
+						>
+							{isVerified ? "Register" : "Close"}
+						</button>
+					</div>
+				</div>
+			)}
+		</div>
+	);
 }

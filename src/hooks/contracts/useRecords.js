@@ -17,11 +17,10 @@ const useRecords = (address) => {
 			const records = [];
 			for (let i = 0; i < recordCount; i += 1) {
 				const record = await contract.getRecord(i);
-				console.log(record[2]);
 				records.push({
 					recordId: Number(BigInt(record[0])),
-					date: new Date(Number(BigInt(record[2])) * 1000).toString(),
-					message: record[1],
+					date: new Date(Number(BigInt(record[2])) * 1000).toDateString(),
+					info: JSON.parse(record[1]),
 				});
 			}
 			setRecords(records);
@@ -32,9 +31,9 @@ const useRecords = (address) => {
 		}
 	};
 
-	const uploadRecord = async (message) => {
+	const uploadRecord = async (info) => {
 		const contract = signerContract(address, SupplyChain.abi);
-		const transaction = await contract.addRecord(message);
+		const transaction = await contract.addRecord(info);
 		await transaction.wait();
 		readRecords();
 	};
