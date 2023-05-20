@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 import DayjustSilver from "../asset/dayjust-silver.png";
 import SubmarinerGreen from "../asset/submariner-green.png";
 
-const contractAddress = "0xFb0c1515F8738da5C1D543f6AE354d573Ab1079A";
+const contractAddress = "0x1C6F250Fed55f6D20910319DaC89Cc33D401F179";
 
 export default function RecordBoard() {
 	const [open, setOpen] = useState(false);
@@ -39,7 +39,8 @@ export default function RecordBoard() {
 							<figure className="h-48">
 								<img
 									src={
-										record.info.model === "dayjust"
+										record.info.model === "dayjust" ||
+										record.info.model === "galaxy"
 											? DayjustSilver
 											: SubmarinerGreen
 									}
@@ -49,6 +50,7 @@ export default function RecordBoard() {
 								<p>model: {record.info.model}</p>
 								<p>color: {record.info.color}</p>
 								<p>made date: {record.info.madeAt}</p>
+								<br />
 								<p>registered date: {record.date}</p>
 							</div>
 						</div>
@@ -67,7 +69,7 @@ export default function RecordBoard() {
 						>
 							<option value="submariner">submariner</option>
 							<option value="daytona">daytona</option>
-							<option value="galaxy">dayjust</option>
+							<option value="dayjust">dayjust</option>
 						</select>
 						<select
 							onChange={(e) => setColorInput(e.target.value)}
@@ -97,7 +99,11 @@ export default function RecordBoard() {
 								value={`{"id":"1a54fd97-691e-42c4-9b03-5d412f8823e4","typ":"application/iden3comm-plain-json","type":"https://iden3-communication.io/authorization/1.0/request","thid":"1a54fd97-691e-42c4-9b03-5d412f8823e4","body":{"callbackUrl":"https://self-hosted-demo-backend-platform.polygonid.me/api/callback?sessionId=70520","reason":"test flow","scope":[]},"from":"did:polygonid:polygon:mumbai:2qLhNLVmoQS7pQtpMeKHDqkTcENBZUj1nkZiRNPGgV"}`}
 							/>
 						)}
-						{isVerified && <div>"Verified!"</div>}
+						{isVerified && (
+							<div className="m-3" style={{ color: "black", fontSize: "20px" }}>
+								Verified!
+							</div>
+						)}
 						<button
 							onClick={() => {
 								if (!isVerified) setOpen(false);
