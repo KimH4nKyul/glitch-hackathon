@@ -6,25 +6,25 @@
 			"id": "@id",
 			"type": "@type",
 			"proofOfRolexOwner": {
-				"@id": "https://s3.eu-west-1.amazonaws.com/polygonid-schemas/0b26ddfa-4513-4ed4-8fe6-f304ed86e12e.json-ld#proofOfRolexOwner",
+				"@id": "https://github.com/habibi03336/glitch-hackathon/blob/master/dev/proof-of-rolex-owner.jsonld#proofOfRolexOwner",
 				"@context": {
 					"@version": 1.1,
 					"@protected": true,
 					"id": "@id",
 					"type": "@type",
-					"poly-vocab": "https://s3.eu-west-1.amazonaws.com/polygonid-schemas/0b26ddfa-4513-4ed4-8fe6-f304ed86e12e.vocab.schema.json",
-					"serialization": "https://github.com/iden3/claim-schema-vocab/blob/main/credentials/serialization.md#",
+					"vocab": "https://github.com/habibi03336/glitch-hackathon/blob/master/dev/proof-of-rolex-owner-vocab.md#",
+					"xsd": "http://www.w3.org/2001/XMLSchema#",
 					"serialnumber": {
-						"@id": "poly-vocab:serialnumber",
-						"@type": "serialization:IndexDataSlotA"
+						"@id": "vocab:serialnumber",
+						"@type": "xsd:integer"
 					},
 					"madeAt": {
-						"@id": "poly-vocab:madeAt",
-						"@type": "serialization:IndexDataSlotB"
+						"@id": "vocab:madeAt",
+						"@type": "xsd:integer"
 					},
 					"modelCode": {
-						"@id": "poly-vocab:madeAt",
-						"@type": "serialization:IndexDataSlotB"
+						"@id": "vocab:madeAt",
+						"@type": "xsd:integer"
 					}
 				}
 			}
